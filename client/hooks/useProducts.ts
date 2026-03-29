@@ -126,7 +126,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 2499,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1587829191301-7c86dcb803c0?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=500&fit=crop",
       ],
       category: "Components",
       is_featured: false,
@@ -188,7 +188,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 199,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1598148715386-084fbb1ecd54?w=500&h=500&fit=crop",
       ],
       category: "Accessories",
       is_featured: false,
