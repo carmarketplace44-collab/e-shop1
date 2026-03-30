@@ -9,7 +9,7 @@ const CACHE_KEY = "e_shop_products_cache";
 const CACHE_TIMESTAMP_KEY = "e_shop_products_cache_timestamp";
 const CACHE_DURATION = 1 * 60 * 60 * 1000; // 1 hour in ms
 const LOCAL_PRODUCTS_KEY = "e_shop_products_local";
-const PRODUCTS_VERSION = "v2.0"; // Increment when sample data changes
+const PRODUCTS_VERSION = "v2.1"; // Increment when sample data changes
 
 function isValidProductData(data: any): data is GitHubProductData {
   return (
