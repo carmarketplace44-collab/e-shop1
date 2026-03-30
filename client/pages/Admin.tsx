@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { AdminProductForm } from "@/components/AdminProductForm";
 import { AdminProductList } from "@/components/AdminProductList";
+import { AnalyticsDashboard } from "@/components/AnalyticsDashboard";
 import { useProducts } from "@/hooks/useProducts";
+import { useAnalyticsSync } from "@/hooks/useAnalyticsSync";
 import { Product } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { LogOut, Settings } from "lucide-react";
+import { LogOut, Settings, BarChart3, Zap } from "lucide-react";
 
 const ADMIN_PASSWORD_KEY = "e_shop_admin_password";
 const DEFAULT_PASSWORD = "admin123"; // Should be changed in production
@@ -18,9 +20,10 @@ export default function AdminPage() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
-  const [activeTab, setActiveTab] = useState<"products" | "settings">("products");
+  const [activeTab, setActiveTab] = useState<"products" | "analytics" | "settings">("products");
   const [editingProduct, setEditingProduct] = useState<Product | undefined>();
   const [isLoading, setIsLoading] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
 
   const githubToken = import.meta.env.VITE_GITHUB_TOKEN || "";
   const githubOwner = import.meta.env.VITE_GITHUB_OWNER || "YOUR_USERNAME";
@@ -30,6 +33,13 @@ export default function AdminPage() {
     githubToken,
     githubOwner,
     githubRepo
+  );
+
+  const { syncAnalytics, shouldSync } = useAnalyticsSync(
+    githubToken,
+    githubOwner,
+    githubRepo,
+    !!githubToken
   );
 
   // Check authentication on mount
@@ -123,6 +133,18 @@ export default function AdminPage() {
       .catch(() => alert("Failed to add category"));
   };
 
+  const handleManualSync = async () => {
+    setIsSyncing(true);
+    try {
+      await syncAnalytics();
+      alert("Analytics synced successfully to GitHub!");
+    } catch (error) {
+      alert("Failed to sync analytics. Check your GitHub configuration.");
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   // Login Form
   if (!isAuthenticated) {
     return (
@@ -184,10 +206,10 @@ export default function AdminPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-4 mb-8 border-b">
+        <div className="flex gap-4 mb-8 border-b overflow-x-auto">
           <button
             onClick={() => setActiveTab("products")}
-            className={`px-4 py-2 font-semibold border-b-2 transition ${
+            className={`px-4 py-2 font-semibold border-b-2 transition whitespace-nowrap ${
               activeTab === "products"
                 ? "border-accent text-primary"
                 : "border-transparent text-muted-foreground hover:text-primary"
@@ -196,8 +218,19 @@ export default function AdminPage() {
             Products
           </button>
           <button
+            onClick={() => setActiveTab("analytics")}
+            className={`flex items-center gap-2 px-4 py-2 font-semibold border-b-2 transition whitespace-nowrap ${
+              activeTab === "analytics"
+                ? "border-accent text-primary"
+                : "border-transparent text-muted-foreground hover:text-primary"
+            }`}
+          >
+            <BarChart3 size={16} />
+            Analytics
+          </button>
+          <button
             onClick={() => setActiveTab("settings")}
-            className={`flex items-center gap-2 px-4 py-2 font-semibold border-b-2 transition ${
+            className={`flex items-center gap-2 px-4 py-2 font-semibold border-b-2 transition whitespace-nowrap ${
               activeTab === "settings"
                 ? "border-accent text-primary"
                 : "border-transparent text-muted-foreground hover:text-primary"
@@ -208,8 +241,8 @@ export default function AdminPage() {
           </button>
         </div>
 
-        {/* Content */}
-        {activeTab === "products" ? (
+                {/* Content */}
+        {activeTab === "products" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Form */}
             <div className="lg:col-span-1">
@@ -247,7 +280,15 @@ export default function AdminPage() {
               </Card>
             </div>
           </div>
-        ) : (
+        )}
+
+        {activeTab === "analytics" && products && (
+          <div>
+            <AnalyticsDashboard products={products.products || []} />
+          </div>
+        )}
+
+        {activeTab === "settings" && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Categories */}
             <Card>
@@ -340,6 +381,56 @@ export default function AdminPage() {
                       Clear Product Cache
                     </Button>
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Analytics Sync */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Zap size={20} />
+                  Analytics Sync
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium mb-2">GitHub Sync</p>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Sync analytics data to GitHub daily. Last auto-sync will be tracked.
+                  </p>
+                  <Button
+                    onClick={handleManualSync}
+                    disabled={isSyncing || !githubToken}
+                    className="w-full bg-accent text-primary hover:bg-accent/90"
+                  >
+                    {isSyncing ? "Syncing..." : "Sync Analytics Now"}
+                  </Button>
+                  {!githubToken && (
+                    <p className="text-xs text-orange-600 mt-2">
+                      ⚠️ GitHub token not configured. Set VITE_GITHUB_TOKEN to enable sync.
+                    </p>
+                  )}
+                  {shouldSync && githubToken && (
+                    <p className="text-xs text-green-600 mt-2">
+                      ✓ Ready to sync. Last sync was 24+ hours ago.
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <p className="text-sm font-medium mb-2">Local Analytics</p>
+                  <Button
+                    onClick={() => {
+                      const views = JSON.parse(localStorage.getItem("e_shop_analytics_views") || "{}");
+                      const clicks = JSON.parse(localStorage.getItem("e_shop_analytics_clicks") || "{}");
+                      console.log("Local Analytics:", { views, clicks });
+                      alert("Analytics exported to console. Check developer tools.");
+                    }}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    Export Local Data
+                  </Button>
                 </div>
               </CardContent>
             </Card>

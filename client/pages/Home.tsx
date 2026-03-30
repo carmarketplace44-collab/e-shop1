@@ -3,6 +3,8 @@ import { BannerSlider, BannerSlide } from "@/components/BannerSlider";
 import { ProductGrid } from "@/components/ProductGrid";
 import { CategoryCard } from "@/components/CategoryCard";
 import { useProducts } from "@/hooks/useProducts";
+import { useAnalyticsSync } from "@/hooks/useAnalyticsSync";
+import { getTopProductsForBanner } from "@/lib/auto-feature";
 import { Package, Truck, MessageCircle } from "lucide-react";
 
 const DEMO_BANNERS: BannerSlide[] = [
@@ -49,6 +51,24 @@ export default function Home() {
 
   const { products, loading } = useProducts(githubToken, githubOwner, githubRepo);
 
+  // Initialize analytics sync
+  useAnalyticsSync(githubToken, githubOwner, githubRepo, !!githubToken);
+
+  // Generate dynamic banners from top products
+  const topProductsForBanner = products?.products
+    ? getTopProductsForBanner(products.products).slice(0, 3)
+    : [];
+
+  const dynamicBanners: BannerSlide[] = topProductsForBanner.map((product) => ({
+    id: product.id,
+    image: product.images[0] || "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&h=600&fit=crop",
+    title: product.name,
+    subtitle: product.description.substring(0, 100),
+    cta_text: "View Product",
+  }));
+
+  const banners = dynamicBanners.length > 0 ? dynamicBanners : DEMO_BANNERS;
+
   const featuredProducts =
     products?.products?.filter((p) => p.is_featured).slice(0, 4) || [];
   const promotedProducts =
@@ -57,9 +77,9 @@ export default function Home() {
 
   return (
     <Layout>
-      {/* Hero Banner */}
+      {/* Hero Banner - Auto-updated with top products */}
       <section>
-        <BannerSlider slides={DEMO_BANNERS} autoPlay={true} autoPlayInterval={5000} />
+        <BannerSlider slides={banners} autoPlay={true} autoPlayInterval={5000} />
       </section>
 
       {/* Categories */}

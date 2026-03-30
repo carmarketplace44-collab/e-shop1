@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { useProducts } from "@/hooks/useProducts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ChevronLeft, Heart } from "lucide-react";
+import { trackProductView, trackWhatsAppClick } from "@/lib/analytics";
 
 const WHATSAPP_PHONE = "233571778866";
 
@@ -21,6 +22,13 @@ export default function ProductDetailPage() {
   const { products } = useProducts(githubToken, githubOwner, githubRepo);
 
   const product = products?.products.find((p) => p.id === id);
+
+  // Track product view on page load
+  useEffect(() => {
+    if (id) {
+      trackProductView(id);
+    }
+  }, [id]);
 
   if (!product) {
     return (
@@ -42,6 +50,7 @@ export default function ProductDetailPage() {
   }
 
   const handleWhatsAppClick = () => {
+    trackWhatsAppClick(product.id);
     const message = `Hello, I'm interested in this product:\n\n🛍️ ${product.name}\n💰 Price: ${product.currency} ${product.price.toLocaleString()}\n📝 ${product.description}\n\nPlease assist me with ordering.`;
     const encodedMessage = encodeURIComponent(message);
     const waLink = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`;
