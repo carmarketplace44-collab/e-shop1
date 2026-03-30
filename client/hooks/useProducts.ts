@@ -49,7 +49,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 1899,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=500&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1544519992-19d9adac0800?w=500&h=500&fit=crop&q=80",
       ],
       category: "Tablets",
       is_featured: true,
@@ -111,7 +111,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 449,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1587829191301-7c86dcb803c0?w=500&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1587829191301-7c86dcb803c0?w=500&h=500&fit=crop&q=80&s=5a94a1ee78e83bf3c4825c093e0cd0f7",
       ],
       category: "Accessories",
       is_featured: true,
@@ -188,7 +188,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 199,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1598148715386-084fbb1ecd54?w=500&h=500&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1606986628025-35d57e735ae0?w=500&h=500&fit=crop&q=80",
       ],
       category: "Accessories",
       is_featured: false,
