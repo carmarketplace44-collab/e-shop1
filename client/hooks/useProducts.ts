@@ -9,6 +9,7 @@ const CACHE_KEY = "e_shop_products_cache";
 const CACHE_TIMESTAMP_KEY = "e_shop_products_cache_timestamp";
 const CACHE_DURATION = 1 * 60 * 60 * 1000; // 1 hour in ms
 const LOCAL_PRODUCTS_KEY = "e_shop_products_local";
+const PRODUCTS_VERSION = "v2.0"; // Increment when sample data changes
 
 function isValidProductData(data: any): data is GitHubProductData {
   return (
@@ -251,6 +252,15 @@ export function useProducts(
     setError(null);
 
     try {
+      // Check if we need to clear old cache due to version change
+      const currentVersion = localStorage.getItem("e_shop_products_version");
+      if (currentVersion !== PRODUCTS_VERSION) {
+        localStorage.removeItem(CACHE_KEY);
+        localStorage.removeItem(CACHE_TIMESTAMP_KEY);
+        localStorage.removeItem(LOCAL_PRODUCTS_KEY);
+        localStorage.setItem("e_shop_products_version", PRODUCTS_VERSION);
+      }
+
       // Try to get local products first (admin saved data)
       const localData = getLocalProducts();
       if (localData) {
