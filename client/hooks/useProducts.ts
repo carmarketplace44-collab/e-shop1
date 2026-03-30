@@ -201,6 +201,15 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
   categories: ["Laptops", "Tablets", "Audio", "Monitors", "Accessories", "Components", "TVs"],
 };
 
+function isValidProductData(data: any): data is GitHubProductData {
+  return (
+    data &&
+    Array.isArray(data.products) &&
+    data.products.length > 0 &&
+    Array.isArray(data.categories)
+  );
+}
+
 export function useProducts(
   githubToken?: string,
   githubOwner?: string,
@@ -262,10 +271,20 @@ export function useProducts(
           githubOwner,
           githubRepo
         );
-        setProducts(data);
-        setCachedProducts(data);
-        return data;
+
+        if (isValidProductData(data)) {
+          setProducts(data);
+          setCachedProducts(data);
+          return data;
+        }
+
+        console.warn("GitHub product data is empty or invalid, falling back to sample products.");
       }
+
+      // Fallback to sample products for demo/preview
+      setProducts(SAMPLE_PRODUCTS);
+      setCachedProducts(SAMPLE_PRODUCTS);
+      return SAMPLE_PRODUCTS;
 
       // Fallback to sample products for demo/preview
       setProducts(SAMPLE_PRODUCTS);
