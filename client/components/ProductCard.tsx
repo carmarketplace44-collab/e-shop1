@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Badge } from "./ui/badge";
+import { useState } from "react";
 
 export interface Product {
   id: string;
@@ -20,7 +21,9 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const imageUrl = product.images && product.images[0] ? product.images[0] : "";
+  const defaultImageSrc = "/placeholder.svg";
+  const initialImageSrc = product.images && product.images[0] ? product.images[0] : defaultImageSrc;
+  const [src, setSrc] = useState(initialImageSrc);
 
   return (
     <Link
@@ -29,19 +32,13 @@ export function ProductCard({ product }: ProductCardProps) {
     >
       {/* Image Container */}
       <div className="relative h-72 w-full overflow-hidden bg-gray-200">
-        {imageUrl && (
-          <img
-            src={imageUrl}
-            alt={product.name}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-            loading="lazy"
-          />
-        )}
-        {!imageUrl && (
-          <div className="flex h-full w-full items-center justify-center bg-gray-300">
-            <span className="text-sm text-gray-500">No image</span>
-          </div>
-        )}
+        <img
+          src={src}
+          alt={product.name}
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+          loading="lazy"
+          onError={() => setSrc(defaultImageSrc)}
+        />
 
         {/* Promotion Badge */}
         {product.is_promoted && product.promotion_tag && (

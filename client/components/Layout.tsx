@@ -22,7 +22,7 @@ export function Layout({ children }: LayoutProps) {
                 <span className="font-heading font-bold text-primary text-lg">E</span>
               </div>
               <span className="font-heading font-bold text-xl text-primary hidden sm:inline">
-                e-shop
+                E-S
               </span>
             </Link>
 

@@ -6,7 +6,7 @@ export const SAMPLE_PRODUCTS = {
       price: 599,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&h=500&fit=crop",
+        "https://picsum.photos/seed/headphones/500/500",
       ],
       category: "Electronics",
       is_featured: true,
@@ -22,7 +22,7 @@ export const SAMPLE_PRODUCTS = {
       price: 299,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&h=500&fit=crop",
+        "https://picsum.photos/seed/wallet/500/500",
       ],
       category: "Accessories",
       is_featured: true,
@@ -36,7 +36,7 @@ export const SAMPLE_PRODUCTS = {
       price: 149,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1602827860917-0ad8e95d92d2?w=500&h=500&fit=crop",
+        "https://picsum.photos/seed/bottle/500/500",
       ],
       category: "Lifestyle",
       is_featured: false,
@@ -51,7 +51,7 @@ export const SAMPLE_PRODUCTS = {
       price: 899,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=500&fit=crop",
+        "https://picsum.photos/seed/watch/500/500",
       ],
       category: "Electronics",
       is_featured: true,
@@ -65,7 +65,7 @@ export const SAMPLE_PRODUCTS = {
       price: 449,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1517668808822-9ebb02ae2a0e?w=500&h=500&fit=crop",
+        "https://picsum.photos/seed/coffee/500/500",
       ],
       category: "Home & Kitchen",
       is_featured: false,
@@ -79,7 +79,7 @@ export const SAMPLE_PRODUCTS = {
       price: 1299,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=500&h=500&fit=crop",
+        "https://picsum.photos/seed/camera/500/500",
       ],
       category: "Electronics",
       is_featured: true,
@@ -94,7 +94,7 @@ export const SAMPLE_PRODUCTS = {
       price: 199,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=500&h=500&fit=crop",
+        "https://picsum.photos/seed/yoga/500/500",
       ],
       category: "Fitness",
       is_featured: false,
@@ -108,7 +108,7 @@ export const SAMPLE_PRODUCTS = {
       price: 349,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1589003077984-894e133814c9?w=500&h=500&fit=crop",
+        "https://picsum.photos/seed/speaker/500/500",
       ],
       category: "Electronics",
       is_featured: false,
