@@ -18,7 +18,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 3999,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1560750588-68563e3ceb0a?w=500&h=500&fit=crop&q=80",
       ],
       category: "Laptops",
       is_featured: true,
@@ -34,7 +34,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 2899,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1588872657840-ba0f8a3c3975?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1540932020986-a8468ec8b39f?w=500&h=500&fit=crop&q=80",
       ],
       category: "Laptops",
       is_featured: true,
@@ -49,7 +49,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 1899,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1585790332529-194a9e4532cd?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=500&h=500&fit=crop&q=80",
       ],
       category: "Tablets",
       is_featured: true,
@@ -65,7 +65,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 599,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&h=500&fit=crop&q=80",
       ],
       category: "Audio",
       is_featured: true,
@@ -80,7 +80,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 1499,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1534156826476-ed80f30a7ae0?w=500&h=500&fit=crop&q=80",
       ],
       category: "Monitors",
       is_featured: false,
@@ -96,7 +96,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 299,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1527814050087-3793815479db?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1527814050087-3793815479db?w=500&h=500&fit=crop&q=80",
       ],
       category: "Accessories",
       is_featured: false,
@@ -111,7 +111,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 449,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1587829191301-7c86dcb803c0?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1587829191301-7c86dcb803c0?w=500&h=500&fit=crop&q=80",
       ],
       category: "Accessories",
       is_featured: true,
@@ -126,7 +126,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 2499,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1591290619447-14aa534da0a0?w=500&h=500&fit=crop&q=80",
       ],
       category: "Components",
       is_featured: false,
@@ -142,7 +142,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 1999,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500&h=500&fit=crop&q=80",
       ],
       category: "TVs",
       is_featured: true,
@@ -157,7 +157,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 399,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=500&h=500&fit=crop&q=80",
       ],
       category: "Audio",
       is_featured: false,
@@ -172,7 +172,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 2199,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1547814050-b774088ecd41?w=500&h=500&fit=crop&q=80",
       ],
       category: "Laptops",
       is_featured: false,
@@ -188,7 +188,7 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
       price: 199,
       currency: "GHS",
       images: [
-        "https://images.unsplash.com/photo-1598148715386-084fbb1ecd54?w=500&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1598148715386-084fbb1ecd54?w=500&h=500&fit=crop&q=80",
       ],
       category: "Accessories",
       is_featured: false,
