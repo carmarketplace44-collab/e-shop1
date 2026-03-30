@@ -239,17 +239,13 @@ export function useProducts(
   }, []);
 
   const fetchProducts = useCallback(async () => {
-    console.log("🔄 fetchProducts called, version:", PRODUCTS_VERSION);
     setLoading(true);
     setError(null);
 
     try {
       // Check if we need to clear old cache due to version change
       const currentVersion = localStorage.getItem("e_shop_products_version");
-      console.log("📦 Current stored version:", currentVersion, "New version:", PRODUCTS_VERSION);
-
       if (currentVersion !== PRODUCTS_VERSION) {
-        console.log("🗑️ Clearing old cache due to version change");
         localStorage.removeItem(CACHE_KEY);
         localStorage.removeItem(CACHE_TIMESTAMP_KEY);
         localStorage.removeItem(LOCAL_PRODUCTS_KEY);
@@ -259,7 +255,6 @@ export function useProducts(
       // Try to get local products first (admin saved data)
       const localData = getLocalProducts();
       if (localData) {
-        console.log("📱 Using local products:", localData.products.length, "items");
         setProducts(localData);
         setCachedProducts(localData);
         setLoading(false);
@@ -269,7 +264,6 @@ export function useProducts(
       // Try to get cached products next
       const cached = getCachedProducts();
       if (cached) {
-        console.log("💾 Using cached products:", cached.products.length, "items");
         setProducts(cached);
         setLoading(false);
         return cached;
@@ -294,8 +288,6 @@ export function useProducts(
       }
 
       // Fallback to sample products for demo/preview
-      console.log("📋 Using sample products:", SAMPLE_PRODUCTS.products.length, "items");
-      console.log("📋 First product:", SAMPLE_PRODUCTS.products[0]?.name);
       setProducts(SAMPLE_PRODUCTS);
       setCachedProducts(SAMPLE_PRODUCTS);
       setLocalProducts(SAMPLE_PRODUCTS);
