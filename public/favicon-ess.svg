@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background -->
+  <rect width="100" height="100" fill="#0F172A" rx="20"/>
+  
+  <!-- Gold accent border -->
+  <rect width="100" height="100" fill="none" stroke="#C9A961" stroke-width="2" rx="20"/>
+  
+  <!-- Text: ESS -->
+  <text 
+    x="50" 
+    y="65" 
+    font-family="'Playfair Display', serif" 
+    font-size="48" 
+    font-weight="700" 
+    fill="#C9A961" 
+    text-anchor="middle" 
+    dominant-baseline="middle"
+  >
+    ESS
+  </text>
+</svg>
