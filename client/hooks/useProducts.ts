@@ -8,6 +8,36 @@ import {
 const CACHE_KEY = "e_shop_products_cache";
 const CACHE_TIMESTAMP_KEY = "e_shop_products_cache_timestamp";
 const CACHE_DURATION = 1 * 60 * 60 * 1000; // 1 hour in ms
+const LOCAL_PRODUCTS_KEY = "e_shop_products_local";
+
+function isValidProductData(data: any): data is GitHubProductData {
+  return (
+    data &&
+    Array.isArray(data.products) &&
+    Array.isArray(data.categories) &&
+    data.products.length >= 0
+  );
+}
+
+function getLocalProducts(): GitHubProductData | null {
+  try {
+    const local = localStorage.getItem(LOCAL_PRODUCTS_KEY);
+    if (!local) return null;
+    const parsed = JSON.parse(local);
+    if (isValidProductData(parsed)) return parsed;
+  } catch (err) {
+    console.warn("Failed to parse local products:", err);
+  }
+  return null;
+}
+
+function setLocalProducts(data: GitHubProductData) {
+  try {
+    localStorage.setItem(LOCAL_PRODUCTS_KEY, JSON.stringify(data));
+  } catch (err) {
+    console.warn("Failed to set local products:", err);
+  }
+}
 
 // Sample products for demo/fallback
 const SAMPLE_PRODUCTS: GitHubProductData = {
@@ -256,7 +286,16 @@ export function useProducts(
     setError(null);
 
     try {
-      // Try to get cached products first
+      // Try to get local products first (admin saved data)
+      const localData = getLocalProducts();
+      if (localData) {
+        setProducts(localData);
+        setCachedProducts(localData);
+        setLoading(false);
+        return localData;
+      }
+
+      // Try to get cached products next
       const cached = getCachedProducts();
       if (cached) {
         setProducts(cached);
@@ -275,6 +314,7 @@ export function useProducts(
         if (isValidProductData(data)) {
           setProducts(data);
           setCachedProducts(data);
+          setLocalProducts(data);
           return data;
         }
 
@@ -284,11 +324,7 @@ export function useProducts(
       // Fallback to sample products for demo/preview
       setProducts(SAMPLE_PRODUCTS);
       setCachedProducts(SAMPLE_PRODUCTS);
-      return SAMPLE_PRODUCTS;
-
-      // Fallback to sample products for demo/preview
-      setProducts(SAMPLE_PRODUCTS);
-      setCachedProducts(SAMPLE_PRODUCTS);
+      setLocalProducts(SAMPLE_PRODUCTS);
       return SAMPLE_PRODUCTS;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Failed to fetch products";
@@ -315,25 +351,28 @@ export function useProducts(
 
   const updateProducts = useCallback(
     async (newData: GitHubProductData) => {
-      if (!githubToken) {
-        throw new Error("GitHub token is required to update products");
+      setProducts(newData);
+      setCachedProducts(newData);
+      setLocalProducts(newData);
+
+      // Save to GitHub only if token and repo details are present
+      if (githubToken) {
+        try {
+          await updateProductsOnGitHub(
+            githubToken,
+            newData,
+            githubOwner,
+            githubRepo
+          );
+        } catch (err) {
+          const errorMessage = err instanceof Error ? err.message : "Failed to update products on GitHub";
+          setError(errorMessage);
+          console.warn(errorMessage);
+          // Do not throw; local state is already updated for client preview.
+        }
       }
 
-      try {
-        await updateProductsOnGitHub(
-          githubToken,
-          newData,
-          githubOwner,
-          githubRepo
-        );
-        setProducts(newData);
-        setCachedProducts(newData);
-        return newData;
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Failed to update products";
-        setError(errorMessage);
-        throw err;
-      }
+      return newData;
     },
     [githubToken, githubOwner, githubRepo, setCachedProducts]
   );
