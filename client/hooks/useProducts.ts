@@ -197,15 +197,6 @@ const SAMPLE_PRODUCTS: GitHubProductData = {
   categories: ["TVs", "Laptops", "Audio", "Smartphones", "Tablets", "Gaming", "Cameras"],
 };
 
-function isValidProductData(data: any): data is GitHubProductData {
-  return (
-    data &&
-    Array.isArray(data.products) &&
-    data.products.length > 0 &&
-    Array.isArray(data.categories)
-  );
-}
-
 export function useProducts(
   githubToken?: string,
   githubOwner?: string,
